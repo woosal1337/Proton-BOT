@@ -6,7 +6,7 @@ from discord.ext.commands import CommandNotFound
 import time
 from selenium import webdriver
 import bs4 as bs
-from selenium import webdriver   # for webdriver
+from selenium import webdriver  # for webdriver
 from selenium.webdriver.support.ui import WebDriverWait  # for implicit and explict waits
 from selenium.webdriver.chrome.options import Options  # for suppressing the browser
 
@@ -20,10 +20,9 @@ class Bot(BotBase):
         self.ready = False
         self.guild = None
         self.scheduler = AsyncIOScheduler()
-        
 
-        super().__init__(command_prefix = PREFIX, owner_ids = OWNER_IDS)
-    
+        super().__init__(command_prefix=PREFIX, owner_ids=OWNER_IDS)
+
     def run(self, version):
         self.VERSION = version
 
@@ -42,11 +41,11 @@ class Bot(BotBase):
     async def on_error(self, err, *args, **kwargs):
         if err == "on_command_error":
             await args[0].send("Something went wrong!")
-        
+
         else:
             channel = self.get_channel(757016278060761178)
             await channel.send("Dude your code freaking sucks, and error occured right here!")
-        
+
         raise
 
     async def on_command_error(self, ctx, exc):
@@ -55,7 +54,7 @@ class Bot(BotBase):
 
         elif hasattr(exc, "original"):
             raise exc.original
-            
+
         else:
             raise exc
 
@@ -69,7 +68,7 @@ class Bot(BotBase):
             await channel.send("Now online!")
 
             embed = Embed(title="Now online!", url="https://www.github.com/woosal1337",
-                          description="MadeInAZE is now online.", 
+                          description="MadeInAZE is now online.",
                           colour=0xFF0000,
                           timestamp=datetime.utcnow())
             fields = [("Name", "Value", True),
@@ -83,13 +82,13 @@ class Bot(BotBase):
             embed.set_footer(text="This is a footer xD?")
             embed.set_thumbnail(url=self.guild.icon_url)
             embed.set_image(url=self.guild.icon_url)
-            #await channel.send(embed=embed)
+            # await channel.send(embed=embed)
+            # await channel.send(file=File("./data/images/elon.gif"))
             await channel.send("Started the Service.")
             await channel.send("Scraping ProtonMail")
 
             with open("lib/bot/warnings.txt", "r") as theWarningFile:
-                firstLength = 0 #len(theWarningFile.read())
-
+                firstLength = 0  # len(theWarningFile.read())
 
             while True:
                 with open("lib/bot/warnings.txt", "r") as theWarningFile:
@@ -106,12 +105,13 @@ class Bot(BotBase):
 
 
 
-            #await channel.send(file=File("./data/images/elon.gif"))
+
 
         else:
             print("BOT reconnected!")
 
     async def on_message(self, message):
         pass
+
 
 bot = Bot()
