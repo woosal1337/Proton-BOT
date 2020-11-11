@@ -9,6 +9,7 @@ import bs4 as bs
 from selenium import webdriver  # for webdriver
 from selenium.webdriver.support.ui import WebDriverWait  # for implicit and explict waits
 from selenium.webdriver.chrome.options import Options  # for suppressing the browser
+import lib.bot.ipresolver as ipresolver
 
 PREFIX = "+"
 OWNER_IDS = [618038532665114624]
@@ -67,25 +68,21 @@ class Bot(BotBase):
             channel = self.get_channel(757016278060761178)
             await channel.send("Now online!")
 
-            embed = Embed(title="Now online!", url="https://www.github.com/woosal1337",
-                          description="MadeInAZE is now online.",
-                          colour=0xFF0000,
-                          timestamp=datetime.utcnow())
-            fields = [("Name", "Value", True),
-                      ("Another field", "Next to the first one", True),
-                      ("A non-inline field", "This field will appear on third row.", False)]
+            embed = Embed(title="", url="https://www.protonmail.com/", description="Server Alert",
+                                  color=0xe31616)
+            embed.add_field(name="Info:",
+                            value="In order to protect our customers, the traffic to the servers will be filtered through OVHs mitigation infrastructure. Notes: ICMP (Ping) is dropped during the attack! All open ports will also timeout when mitigation is enabled! Do not flex with those stupid timeouts kids!",
+                            inline=False)
 
-            for name, value, inline in fields:
-                embed.add_field(name=name, value=value, inline=inline)
 
             embed.set_author(name="@woosal1337", icon_url=self.guild.icon_url)
             embed.set_footer(text="This is a footer xD?")
-            embed.set_thumbnail(url=self.guild.icon_url)
-            embed.set_image(url=self.guild.icon_url)
+            #embed.set_thumbnail(url=self.guild.icon_url)
+            #embed.set_image(url="lib/bot/flags/azerbaijan.png")
             # await channel.send(embed=embed)
             # await channel.send(file=File("./data/images/elon.gif"))
-            await channel.send("Started the Service.")
-            await channel.send("Scraping ProtonMail")
+            print("Started the Service.")
+            print("Scraping ProtonMail")
 
             with open("lib/bot/warnings.txt", "r") as theWarningFile:
                 firstLength = 0  # len(theWarningFile.read())
@@ -99,13 +96,17 @@ class Bot(BotBase):
                     if currentLength != firstLength:
                         f = open("lib/bot/warnings.txt", "r")
                         lastLine = f.readlines()[-1]
+                        countryName = lastLine.split()[-2]
+                        countryFlag = lastLine.split()[-1]
+                        countryIp = lastLine.split()[-3]
+                        embed.add_field(name="Server location:", value="server.location()", inline=False)
+                        embed.add_field(name="IP:", value=f"||{countryIp}||", inline=False)
+                        embed.add_field(name="Country:", value=f"{countryName}", inline=True)
+                        embed.set_footer(text="Current time")
+                        await channel.send(embed=embed)
+                        await channel.send(file=File(f"lib/bot/flags/{countryFlag}"))
                         firstLength = currentLength
                         time.sleep(0.5)
-                        await channel.send(lastLine)
-
-
-
-
 
         else:
             print("BOT reconnected!")

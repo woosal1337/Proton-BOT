@@ -102,10 +102,11 @@ while True:
 
             time.sleep(0.5)
 
-            warningsText = open("warnings.txt", "a")
-            warningsText.write(f"{mailSenderNameX} sent a DDOS included mail at {mailTimeX} on IP {latestNewMailPath.split()[-1]}\n")
-            warningsText.close()
             countryOfTheAttacker = ipresolver.resolver(str(latestNewMailPath.split()[-1]))
+            resolvedCountry = ipresolver.resolverCountryName(str(latestNewMailPath.split()[-1]))
+            warningsText = open("warnings.txt", "a")
+            warningsText.write(f"{mailSenderNameX} sent a DDOS included mail at {mailTimeX} on IP {latestNewMailPath.split()[-1]} {resolvedCountry} {countryOfTheAttacker}\n")
+            warningsText.close()
             print(countryOfTheAttacker)
             time.sleep(0.5)
 
